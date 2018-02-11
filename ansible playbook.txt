@@ -1,0 +1,170 @@
+
+
+Ansible installation
+
+
+after ssh connections
+
+using pip command ( pip is a python version like same as yum )
+
+installation steps 
+
+first step : $ sudo easy_install pip
+
+second step : $ sudo pip install ansible
+
+installation will proceeds after that 
+
+type ansible in the master client u will see ansible in search 
+
+
+create a directory in master 
+
+mkdir /etc/ansible
+vi /etc/ansible/hosts
+
+in the vi /etc/ansible/hosts just enter client 
+
+
+what is playbook ?
+
+playbook is a script which is written in yaml or json
+
+yaml - Yaml aint markup language
+
+vi test.yml
+ansible-playbook test.yml
+
+cat /etc/ansible/hosts
+
+---
+- hosts: all
+  tasks:
+  - name: install one specific version of Apache
+    yum:
+      name: httpd
+      state: present
+
+
+
+---
+- hosts: all
+  tasks:
+  - name: install one specific version of Apache
+    yum:
+      name: httpd
+      state: present
+~
+
+---
+- hosts: all
+  tasks:
+  - name: create a directory
+    shell: mkdir /var/tmp/test
+
+to start or stop a service
+
+---
+- hosts: all
+  tasks:
+  - name: create a directory
+##    shell: mkdir /var/tmp/test
+    service:
+     name: httpd
+     state: started
+
+
+to create a directory
+
+---
+- hosts: all
+  tasks:
+  - name: create a directory
+    file:
+     path: /tmp/pet1
+     state: directory
+     mode: 0744
+~
+
+
+
+
+
+vi test.yml
+ansible-playbook test.yml
+
+---
+- hosts: all
+  tasks:
+  - name: create a directory
+    file:
+     path: /tmp/pet1
+     state: directory
+     mode: 0744
+  - name: create a directory
+    file:
+     path: /tmp/pet2
+     state: directory
+     mode: 0744
+
+
+to create 4 files f1 to f4
+
+---
+- hosts: all
+  tasks:
+  - name: create a file
+    file:
+     path: /var/tmp/f1
+     state: touch
+     mode: 0700
+  - name: create a file
+    file:
+     path: /var/tmp/f2
+     state: touch
+     mode: 0700
+  - name: create a file
+    file:
+     path: /var/tmp/f3
+     state: touch
+     mode: 0700
+  - name: create a file
+    file:
+     path: /var/tmp/f4
+     state: touch
+     mode: 0700
+
+
+to start or stop a service
+
+---
+- hosts: all
+  tasks:
+  - name: start a service
+    service:
+     name: httpd
+     state: started
+
+to reboot
+
+---
+- hosts: all
+  tasks:
+  - name: too reboot
+    shell: reboot -f
+
+
+
+to create an ec2 instance
+
+- hosts: client
+   tasks:
+   - ec2:
+      key_name: rockstar
+      region: us-east-1
+      instance_type: t2.micro
+      image: ami-26ebbc5c
+      wait: yes
+      count: 1
+      vpc_subnet_id: subnet-69072845
+      assign_public_ip: yes

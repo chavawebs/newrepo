@@ -1,0 +1,54 @@
+
+1. After installing anisble 
+
+root@ip-172-31-23-47 tmp]# mkdir /etc/ansible
+[root@ip-172-31-23-47 tmp]# vi /etc/ansible/hosts
+[root@ip-172-31-23-47 tmp]# 
+
+and add the client to the hosts file
+
+then this is a playbok to create a directory
+
+[root@ip-172-31-23-47 tmp]# cat test.yml 
+---
+- hosts: client
+  tasks:
+   - name: Create a new direcotry
+     file: 
+      path: /var/www/
+      owner: root
+      group: root
+      mode: 0755 
+      state: directory
+[root@ip-172-31-23-47 tmp
+
+2. [root@ip-172-31-23-47 tmp]# cat test.yml 
+---
+- hosts: client
+  tasks:
+   - name: Create a new direcotry
+     file: 
+      path: /var/www/
+      owner: root
+      group: root
+      mode: 0755 
+      state: directory
+   - name: create fake 'nologin' shell
+     file: path=/var/devops state=touch owner=root group=sys mode=0555
+   - name: install the latest version of Apache
+     yum:
+       name: httpd
+       state: latest
+
+   - user:
+       name: johnd
+       comment: "John Doe"
+       uid: 1040
+       group: root
+   - copy:
+       src: /var/tmp
+       dest: /tmp/
+[root@ip-172-31-23-47 tmp]# 
+
+
+
